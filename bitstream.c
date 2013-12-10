@@ -15,7 +15,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <malloc.h>
 
 #include "types.h"
 #include "error.h"

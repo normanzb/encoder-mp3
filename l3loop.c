@@ -13,6 +13,8 @@
 
 
 #include <math.h>
+// include string.h to eliminate the imcompatible implicitly declaration warning
+#include <string.h>
 
 #include "types.h"
 #include "error.h"

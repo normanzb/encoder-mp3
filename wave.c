@@ -13,6 +13,9 @@
 
 
 #include <stdio.h>
+// include string.h to eliminate the imcompatible implicitly declaration warning
+#include <string.h>
+
 #include "portableio.h"
 
 #include "types.h"
