@@ -1,0 +1,10 @@
+#Shine 0.1.4
+
+This is a very minimalist implementation of MPEG Layer III
+distributed under the GPL licence. It can be used as a
+starting point for an encoder.
+
+Originally developed by: Gabriel Bouvigne bouvigne@mp3-tech.org
+
+#License
+LGPL
