@@ -1,5 +1,5 @@
 default:
-	gcc ./*.c -emit-swc=test.namespace -o encoder-mp3.swc
+	gcc ./*.c -emit-swc=im.norm.data.encoders.MP3Encoder -o encoder-mp3.swc
 
 clean:
 	rm -f *.swf *.swc *.o *.exe

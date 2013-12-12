@@ -139,6 +139,20 @@ fflush(bs->pt); /* NEW SS to assist in debugging*/
    bs->buf_bit_idx = 8;
 }
 
+void new_bit_stream(bs, size)
+bitstream_t *bs;   /* bit stream structure */
+int size;               /* size of the buffer */
+{
+  
+  alloc_buffer(bs, size);
+  bs->buf_byte_idx = size-1;
+  bs->buf_bit_idx=8;
+  bs->totbit=0;
+  bs->mode = WRITE_MODE;
+  bs->eob = FALSE;
+  bs->eobs = FALSE;
+}
+
 /* open the device to write the bit stream into it */
 void open_bit_stream_w(bs, bs_filenam, size)
 bitstream_t *bs;   /* bit stream structure */

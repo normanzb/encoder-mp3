@@ -19,6 +19,15 @@
 #include <time.h>
 #include "portableio.h"
 
+#ifndef bool
+typedef unsigned char bool;
+#endif
+#ifndef true
+#define true 1
+#endif
+#ifndef false
+#define false 0
+#endif
 
 
 #define samp_per_frame  1152
@@ -76,6 +85,7 @@ typedef struct {
 
 typedef struct {
     time_t start_time;
+    time_t end_time;
     enum e_byte_order byte_order; 
 
     char* infile;
@@ -83,19 +93,10 @@ typedef struct {
 
     char* outfile;
     mpeg_t mpeg;
+
+    bool pause;
 } config_t;
 extern config_t config;
-
-
-#ifndef bool
-typedef unsigned char bool;
-#endif
-#ifndef true
-#define true 1
-#endif
-#ifndef false
-#define false 0
-#endif
 
 #define WAVE_RIFF_PCM 0
 #define WAVE_PCM_LOHI 1

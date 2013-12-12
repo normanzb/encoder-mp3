@@ -58,6 +58,7 @@ typedef struct  bit_stream_struc {
 
 int refill_buffer(bitstream_t *bs);
 void empty_buffer(bitstream_t *bs,int minimum);
+void new_bit_stream(bitstream_t *bs, int size);
 void open_bit_stream_w(bitstream_t *bs,char *bs_filenam,int size);
 void open_bit_stream_r(bitstream_t *bs,char *bs_filenam,int size);
 void close_bit_stream_r(bitstream_t *bs);

@@ -64,7 +64,9 @@ void compress()
     unsigned long   frame_bits = 0;
     int             sideinfo_len;
 
-    open_bit_stream_w(&bs, config.outfile, BUFFER_SIZE);
+    bs.pt = config.mpeg.file;
+
+    new_bit_stream(&bs, BUFFER_SIZE);
     
     memset((char*)snr32,0,sizeof(snr32));
     memset((char *)sam,0,sizeof(sam));

@@ -65,7 +65,7 @@ bool wave_open()
     long            filesize;
     long            header_size;
 
-    if((config.wave.file = fopen(config.infile,"rb")) == NULL) ERROR("Unable to open file");
+    // if((config.wave.file = fopen(config.infile,"rb")) == NULL) ERROR("Unable to open file");
 
     if(!checkString(config.wave.file,"RIFF")) ERROR("Input not a MS-RIFF file");
     filesize = Read32BitsLowHigh(config.wave.file); /* complete wave chunk size */
