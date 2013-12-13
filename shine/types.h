@@ -103,6 +103,7 @@ extern config_t config;
 #define WAVE_PCM_HILO 2
 #define WAVE_PCM_AIFF 3
 
+#define MODE_STEREO   0
 #define MODE_MONO     3
 
 

@@ -22,7 +22,7 @@
 #include "huffman.h"
 #include "bitstream.h"
      
-HUFFBITS dmask = 1 << (((sizeof(HUFFBITS))<<3)-1);
+HUFFBITS dmask = 1UL << (((sizeof(HUFFBITS))<<3)-1);
 unsigned int hs = sizeof(HUFFBITS)<<3;
 
 static HUFFBITS      t1HB[]   = {1, 1, 1, 0}; 

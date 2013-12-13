@@ -16,8 +16,11 @@
 #define _OUR_ERROR_H
 
 #include <stdlib.h>
+#include <errno.h>
 
-#define ERROR(X) {fprintf(stderr,"[ERROR] %s\n",X);exit(-1);}
+#include "as3api.h"
+
+#define ERROR(X) {AS3_DebugInt("errno", errno); AS3_Throw(X);}
 
 
 #endif

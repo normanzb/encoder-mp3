@@ -18,9 +18,20 @@ package im.norm.data.encoders
         public override function encode(baRaw:ByteArray, config:Object ):ByteArray
         {
             var waveEncoder:WaveEncoder = new WaveEncoder();
-            var baWave:ByteArray = WaveEncoder.encode(baRaw, config);
+            var baWave:ByteArray = waveEncoder.encode(baRaw, config);
+            var ret:ByteArray;
 
-            return im.norm.data.encoders.MP3Encoder.shine.compress(baWave);
+            try
+            {
+                ret = im.norm.data.encoders.MP3Encoder.shine.compress(baWave);
+            }
+            catch(ex:*)
+            {
+                MonsterDebugger.trace( this, 'failed to encode mp3, ex:' );
+                MonsterDebugger.trace( this, ex );
+            }
+
+            return ret;
         }
     }
 }

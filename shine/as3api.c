@@ -8,8 +8,7 @@
 #include "error.h"
 #include "wave.h"
 #include "layer3.h"
-
-#include "AS3/AS3.h"
+#include "fmemopen.h"
 
 #include "as3api.h"
 
@@ -22,7 +21,7 @@ static void set_defaults()
 
     config.mpeg.type = 1;
     config.mpeg.layr = 2;
-    config.mpeg.mode = 2;
+    config.mpeg.mode = (config.wave.channels==1) ? MODE_MONO :MODE_STEREO;
     // TODO
     config.mpeg.bitr = 128;
     config.mpeg.psyc = 2;
@@ -86,6 +85,7 @@ static void check_config()
 void AS3_Compress()
 {
     size_t readResult;
+    
     unsigned char * byteArrayWave;
     unsigned char * byteArrayMPEG;
     unsigned long byteArrayWaveSize;
@@ -100,9 +100,17 @@ void AS3_Compress()
     AS3_GetByteArray( wave, byteArrayWave, byteArrayWaveSize );
 
     // read wave as a FILE
-    config.wave.file = tmpfile();
-    fwrite( byteArrayWave, sizeof(char), byteArrayWaveSize, config.wave.file );
+    config.wave.file = fmemopen(byteArrayWave, byteArrayWaveSize, "rb");
     rewind( config.wave.file );
+
+    // allocate enough space for compression
+    byteArrayMPEG = (char *)malloc( sizeof(char) * byteArrayWaveSize );
+    if (byteArrayMPEG == NULL) ERROR("Memory error...");
+    memset(byteArrayMPEG, 0, byteArrayWaveSize);
+
+    // map the output file
+    config.mpeg.file = fmemopen(byteArrayMPEG, byteArrayWaveSize, "wb");
+    rewind( config.mpeg.file );
     
     // try to open config.wave.file
     if(!wave_open()) ERROR("Unable to open input file...");
@@ -119,19 +127,13 @@ void AS3_Compress()
     compress();
 
     // obtain the size of the file
-    fseek(config.mpeg.file , 0 , SEEK_END);
+    // commented out because the file actual size is significant larger than actual mp3 size
+    // fseek(config.mpeg.file , 0 , SEEK_END);
     byteArrayMPEGSize = ftell(config.mpeg.file);
     rewind(config.mpeg.file);
 
-    // allocate memory to contain the whole file:
-    byteArrayMPEG = (char *)malloc( sizeof(char) * byteArrayWaveSize );
-    if (byteArrayMPEG == NULL) ERROR("Memory error...");
-
-    // read bytes out of the file
-    readResult = fread(byteArrayMPEG , sizeof(char), byteArrayMPEGSize, config.mpeg.file);
-    if (readResult != byteArrayMPEGSize) ERROR("Unable to read the compressed file... ");
-
-    AS3_SetByteArray( result, byteArrayMPEG, byteArrayMPEGSize );
+    AS3_DebugInt("wave file size", byteArrayWaveSize);
+    AS3_DebugInt("mpeg file size", byteArrayMPEGSize);
 
     // ==== CLEANUP ====
     
@@ -141,6 +143,8 @@ void AS3_Compress()
 
     fclose(config.mpeg.file);
 
+    AS3_SetByteArray( result, byteArrayMPEG, byteArrayMPEGSize );
+
     free(byteArrayWave);
 
     free(byteArrayMPEG);
@@ -148,9 +152,8 @@ void AS3_Compress()
     time(&config.end_time);
     config.end_time -= config.start_time;
 
-    // fprintf(stdout," Finished in %2ld:%2ld:%2ld\n",
-    //     end_time/3600,(end_time/60)%60,end_time%60);
-
+    fprintf(stdout," Finished in %2ld:%2ld:%2ld\n",
+        config.end_time/3600,(config.end_time/60)%60,config.end_time%60);
 
     AS3_ReturnAS3Var( result );
 }
