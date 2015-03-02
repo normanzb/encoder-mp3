@@ -7,8 +7,7 @@ void AS3_Compress() __attribute__((
     used,
     annotate("as3sig:public function compress(wave:ByteArray):ByteArray"),
     annotate("as3package:im.norm.data.encoders.MP3Encoder.shine"),
-    annotate("as3import:flash.utils.ByteArray"),
-    annotate("as3import:com.demonsters.debugger.MonsterDebugger")
+    annotate("as3import:flash.utils.ByteArray")
 ));
 
 #endif
