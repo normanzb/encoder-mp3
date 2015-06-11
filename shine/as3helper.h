@@ -31,7 +31,7 @@
     do { \
         inline_as3 \
         ( \
-            "MonsterDebugger.trace(this, CModule.readString(%0, %1) + ' : ' + CModule.readString(%2, %3));\n" \
+            "trace(CModule.readString(%0, %1) + ' : ' + CModule.readString(%2, %3));\n" \
             : : "r"(name), "r"(strlen(name)), "r"(value), "r"(strlen(value)) \
         ); \
     } while(0)
@@ -40,7 +40,7 @@
     do { \
         inline_as3 \
         ( \
-            "MonsterDebugger.trace(this, CModule.readString(%0, %1) + ' : ' + %2);\n" \
+            "trace(CModule.readString(%0, %1) + ' : ' + %2);\n" \
             : : "r"(name), "r"(strlen(name)), "r"(value) \
         ); \
     } while(0)
